@@ -4,7 +4,7 @@
 
 This is the active learning project. Read `AGENTS.md` for collaboration rules,
 then this README before continuing. The local working tree, not the remote repo,
-contains the latest implementation.
+contains the latest implementation; Auth, CRUD and categories were pushed in `01f12b2`.
 
 - Completed: email/password login/logout, protected home page, session refresh,
   database-backed create/read/update/delete, USD-cent validation, monthly totals,
@@ -32,18 +32,18 @@ contains the latest implementation.
   refresh without changing amount or type. The planned category manual checks are
   complete. Earlier CRUD QA remains historical; these reports do not constitute
   an automated security audit.
-- No Expense Tracker deployment has been recorded. Notes App is a different,
-  already deployed app; its deployment URL is not this project's URL.
+- Vercel project `expense-tracker` is linked to this GitHub repository. Production
+  deployment verification is in progress; Notes App remains a separate project.
 - Repository: https://github.com/techinob-ctrl/expense-tracker . Last local commit
-  at handoff: `7b04159`. Auth/database integration and this handoff have uncommitted
-  changes. No commit, push, or deployment was performed for this handoff.
+  at the original handoff: `7b04159`; Auth, CRUD and categories were subsequently
+  committed and pushed in `01f12b2`. Current-month deployment work follows that commit.
 
 ### Categories — manual SQL upgrade (2026-09-15)
 
 The user has already applied this upgrade through SQL Editor and verified sections
 1-5. Do not rerun it because its file was moved. The procedure below is retained
 for a database that has not received the upgrade. The agent did not run remote SQL,
-push, or deploy.
+push, or deploy during the SQL upgrade.
 
 1. Open **fullstack-learning-hub → SQL Editor**, role `postgres`. Pause app writes.
    Export `public.expense_transactions` as CSV from Table Editor as a precaution.
@@ -137,7 +137,8 @@ handleDelete(transaction)
 
 ### Known limitations / not yet implemented
 
-- Default/reset month is hard-coded to `2026-09`, not the current month.
+- Default/reset month uses the current calendar month in `America/New_York`,
+  consistently on the server and browser. Explicit valid URL months are preserved.
 - Reads are limited to 1,000 rows (or the configured API cap); incomplete reads
   show an error rather than incorrect totals. No pagination yet.
 - Updates are last-write-wins; no conflict detection or realtime cross-tab sync.
@@ -242,3 +243,10 @@ npm run build
 ```
 
 The types, sample data, and library functions were copied from the separate expense-tracker-logic exercise. They are independent copies, not automatically synchronized. Money is stored as integer USD cents. Environment variables are required for authentication.
+
+## Current-month behavior
+
+`getCurrentMonth(now = new Date())` returns `YYYY-MM` in `America/New_York`.
+Home uses it when the URL month is missing/invalid; Reset calls it at click time.
+Explicit valid month filters still work. Month/year boundary tests, TypeScript,
+ESLint, production build, and all 61 tests passed before deployment.

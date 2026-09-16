@@ -6,6 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import LogoutButton from "@/components/logout-button";
 import RetryLoadButton from "@/components/retry-load-button";
 import { isCategoryFilter } from "@/lib/categories";
+import { getCurrentMonth } from "@/lib/calendar";
 
 export default async function Home({
   searchParams,
@@ -32,7 +33,7 @@ export default async function Home({
   const validMonth =
     typeof params.month === "string" &&
     /^\d{4}-(0[1-9]|1[0-2])$/.test(params.month);
-  const month = validMonth ? (params.month as string) : "2026-09";
+  const month = validMonth ? (params.month as string) : getCurrentMonth();
   const type =
     params.type === "income" || params.type === "expense" ? params.type : "all";
   const invalidFilters =

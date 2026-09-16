@@ -10,6 +10,7 @@ import type {
 import SummaryCard from "./summary-card";
 import TransactionForm from "./transaction-form";
 import { formatMoney } from "@/lib/money";
+import { getCurrentMonth } from "@/lib/calendar";
 import { CATEGORIES, filterTransactionsByCategory, getCategoryLabel, isCategoryFilter } from "@/lib/categories";
 import type { CategoryFilter } from "@/lib/categories";
 import { createTransaction, saveTransaction, removeTransaction } from "@/actions/transactions";
@@ -237,7 +238,7 @@ export default function ExpenseDashboard({
         </button>
         <button
           type="button"
-          onClick={() => applyFilters("2026-09", "all")}
+          onClick={() => applyFilters(getCurrentMonth(), "all")}
           className="cursor-pointer rounded px-2 py-2 text-sm text-slate-600 underline"
         >
           Reset filters
@@ -245,7 +246,7 @@ export default function ExpenseDashboard({
       </form>
       {invalidFilters && (
         <p role="status" className="mb-4 text-sm text-amber-800">
-          Invalid filters were replaced with defaults: September 2026 for month,
+          Invalid filters were replaced with defaults: the current month (New York time),
           all transactions for type, or all categories for category.
         </p>
       )}
