@@ -1,3 +1,5 @@
+import type { CategoryId } from "../lib/categories.ts";
+
 export type Transaction = {
   id: string;
   title: string;
@@ -5,6 +7,7 @@ export type Transaction = {
   amount: number;
   type: "income" | "expense";
   date: string;
+  category: CategoryId | null;
 };
 
 export type TransactionTypeFilter = Transaction["type"] | "all";

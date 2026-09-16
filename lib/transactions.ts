@@ -1,6 +1,14 @@
 import type { Transaction, NewTransaction, TransactionTypeFilter } from "../types/transaction.ts";
+import { validateCategory } from "./categories.ts";
 
-function validateTransactionInput(input: NewTransaction): NewTransaction {
+export function validateTransactionInput(value: unknown): NewTransaction {
+  if (typeof value !== "object" || value === null) {
+    throw new Error("Transaction details are required.");
+  }
+  const input = value as Record<string, unknown>;
+  if (typeof input.title !== "string" || typeof input.amount !== "number" || typeof input.date !== "string") {
+    throw new Error("Invalid transaction fields.");
+  }
   const title = input.title.trim();
 
   if (!title || title.length > 100) {
@@ -18,7 +26,7 @@ function validateTransactionInput(input: NewTransaction): NewTransaction {
   // Compare the parsed date back to the input to reject dates such as February 30.
   const parsedDate = new Date(`${input.date}T00:00:00.000Z`);
   if (
-    !/^\d{4}-\d{2}-\d{2}$/.test(input.date) ||
+    !/^\d{4}-\d{2}-\d{2}$/.test(input.date) || input.date.startsWith("0000") ||
     Number.isNaN(parsedDate.getTime()) ||
     parsedDate.toISOString().slice(0, 10) !== input.date
   ) {
@@ -30,6 +38,7 @@ function validateTransactionInput(input: NewTransaction): NewTransaction {
     amount: input.amount,
     type: input.type,
     date: input.date,
+    category: validateCategory(input.category, input.type),
   };
 }
 

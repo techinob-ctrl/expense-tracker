@@ -27,7 +27,7 @@ test("rejects invalid dollar input without silently rounding", () => {
 });
 
 const newExpense: NewTransaction = {
-  title: " Coffee ", amount: 450, type: "expense", date: "2026-09-05",
+  title: " Coffee ", amount: 450, type: "expense", date: "2026-09-05", category: null,
 };
 
 test("updates fields but preserves ID, order, and original inputs", () => {
@@ -50,7 +50,7 @@ test("editing an expense recalculates the balance", () => {
 
 test("editing type and date affects filters and totals", () => {
   const result = updateTransaction(transactions, "2", {
-    ...newExpense, type: "income", date: "2026-10-01",
+    ...newExpense, type: "income", date: "2026-10-01", category: null,
   });
   assert.equal(calculateTotalIncome(result), 345450);
   assert.equal(calculateTotalExpense(result), 4875);
@@ -74,7 +74,7 @@ test("update uses the same validation as add and leaves input unchanged on failu
     { ...newExpense, amount: NaN },
     { ...newExpense, amount: Infinity },
     { ...newExpense, amount: Number.MAX_SAFE_INTEGER + 1 },
-    { ...newExpense, date: "2026-02-30" },
+    { ...newExpense, date: "2026-02-30", category: null },
   ];
   for (const input of invalidInputs) {
     assert.throws(() => updateTransaction(transactions, "2", input));
@@ -167,7 +167,7 @@ test("rejects malformed and impossible dates", () => {
   for (const date of ["", "2026-9-05", "2026-02-30", "2026-02-29", "2026-13-01", "2026-04-31"]) {
     assert.throws(() => addTransaction([], { ...newExpense, date }), /Date/);
   }
-  assert.equal(addTransaction([], { ...newExpense, date: "2024-02-29" })[0].date, "2024-02-29");
+  assert.equal(addTransaction([], { ...newExpense, date: "2024-02-29", category: null })[0].date, "2024-02-29");
 });
 
 test("rejects an invalid type at runtime", () => {
@@ -177,9 +177,9 @@ test("rejects an invalid type at runtime", () => {
 
 const mixedMonths = [
   ...transactions,
-  { id: "5", title: "August lunch", amount: 1500, type: "expense" as const, date: "2026-08-31" },
-  { id: "6", title: "October salary", amount: 300000, type: "income" as const, date: "2026-10-01" },
-  { id: "7", title: "Last year", amount: 5000, type: "income" as const, date: "2025-09-01" },
+  { id: "5", title: "August lunch", amount: 1500, type: "expense" as const, date: "2026-08-31", category: null },
+  { id: "6", title: "October salary", amount: 300000, type: "income" as const, date: "2026-10-01", category: null },
+  { id: "7", title: "Last year", amount: 5000, type: "income" as const, date: "2025-09-01", category: null },
 ];
 
 test("type filter selects only income", () => {
@@ -222,7 +222,7 @@ test("filters by both year and month", () => {
 test("includes the first and last day of the selected month", () => {
   const dates = ["2026-08-31", "2026-09-01", "2026-09-30", "2026-10-01"];
   const items = dates.map((date) => ({
-    id: date, title: "Test", amount: 100, type: "expense" as const, date,
+    id: date, title: "Test", amount: 100, type: "expense" as const, date, category: null,
   }));
   assert.deepEqual(filterTransactionsByMonth(items, "2026-09").map((item) => item.date),
     ["2026-09-01", "2026-09-30"]);
@@ -313,8 +313,8 @@ test("subtracts expenses from income", () => {
 
 test("balance can be negative with mixed income and expenses", () => {
   assert.equal(calculateBalance([
-    { id: "1", title: "Gift", amount: 1000, type: "income", date: "2026-09-01" },
-    { id: "2", title: "Lunch", amount: 1250, type: "expense", date: "2026-09-01" },
+    { id: "1", title: "Gift", amount: 1000, type: "income", date: "2026-09-01", category: null },
+    { id: "2", title: "Lunch", amount: 1250, type: "expense", date: "2026-09-01", category: null },
   ]), -250);
 });
 
@@ -325,7 +325,7 @@ test("an expense-only list has a negative balance", () => {
 
 test("equal income and expenses give a zero balance", () => {
   assert.equal(calculateBalance([
-    { id: "1", title: "Gift", amount: 1000, type: "income", date: "2026-09-01" },
-    { id: "2", title: "Lunch", amount: 1000, type: "expense", date: "2026-09-01" },
+    { id: "1", title: "Gift", amount: 1000, type: "income", date: "2026-09-01", category: null },
+    { id: "2", title: "Lunch", amount: 1000, type: "expense", date: "2026-09-01", category: null },
   ]), 0);
 });
