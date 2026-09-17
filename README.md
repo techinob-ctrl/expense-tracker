@@ -32,8 +32,12 @@ contains the latest implementation; Auth, CRUD and categories were pushed in `01
   refresh without changing amount or type. The planned category manual checks are
   complete. Earlier CRUD QA remains historical; these reports do not constitute
   an automated security audit.
-- Vercel project `expense-tracker` is linked to this GitHub repository. Production
-  deployment verification is in progress; Notes App remains a separate project.
+- Production: https://expense-tracker-nine-brown-94.vercel.app . Vercel project
+  `expense-tracker` is linked to GitHub main; application commit `d4bc6d8` reached
+  Ready. The signed-out root redirects to the app login page on the public domain.
+  No error-level production logs were returned in the checked one-hour window.
+  Production login/CRUD with real credentials has not been retested by the agent;
+  earlier authenticated manual QA was user-reported on the local app.
 - Repository: https://github.com/techinob-ctrl/expense-tracker . Last local commit
   at the original handoff: `7b04159`; Auth, CRUD and categories were subsequently
   committed and pushed in `01f12b2`. Current-month deployment work follows that commit.
