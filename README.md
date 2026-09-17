@@ -1,10 +1,16 @@
 # Expense Tracker
 
-## Handoff snapshot — 2026-09-15
+## Project complete — 2026-09-16
 
-This is the active learning project. Read `AGENTS.md` for collaboration rules,
-then this README before continuing. The local working tree, not the remote repo,
-contains the latest implementation; Auth, CRUD and categories were pushed in `01f12b2`.
+The user closed the foundational Expense Tracker learning project after confirming
+that everything works on production. There are no remaining tasks in the agreed
+scope. Known limitations below are optional future work, not completion blockers.
+Read `AGENTS.md` and this README if the user explicitly resumes development.
+
+Production: https://expense-tracker-nine-brown-94.vercel.app
+Repository: https://github.com/techinob-ctrl/expense-tracker
+
+### Completion record
 
 - Completed: email/password login/logout, protected home page, session refresh,
   database-backed create/read/update/delete, USD-cent validation, monthly totals,
@@ -36,8 +42,10 @@ contains the latest implementation; Auth, CRUD and categories were pushed in `01
   `expense-tracker` is linked to GitHub main; application commit `d4bc6d8` reached
   Ready. The signed-out root redirects to the app login page on the public domain.
   No error-level production logs were returned in the checked one-hour window.
-  Production login/CRUD with real credentials has not been retested by the agent;
-  earlier authenticated manual QA was user-reported on the local app.
+  The user subsequently confirmed that everything works on production. This is
+  user-reported acceptance; the agent directly checked only deployment readiness
+  and the signed-out login flow. Latest automated checks: 61 tests, typecheck,
+  lint and production build passed before deployment.
 - Repository: https://github.com/techinob-ctrl/expense-tracker . Last local commit
   at the original handoff: `7b04159`; Auth, CRUD and categories were subsequently
   committed and pushed in `01f12b2`. Current-month deployment work follows that commit.

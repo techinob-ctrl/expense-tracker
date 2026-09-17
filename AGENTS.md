@@ -2,13 +2,14 @@
 
 ## Start here
 
-- Active project: `C:/Users/Techino/CodingStudy/PracticeCoding/expense-tracker`.
+- Completed foundational learning project (closed by user on 2026-09-16).
+  Resume feature work only when requested. Project path: `C:/Users/Techino/CodingStudy/PracticeCoding/expense-tracker`.
 - Read this file and README.md's dated handoff before editing. Inspect current
   `git status`, relevant code, package versions, and any applicable parent instructions.
 - README holds project status and known limitations; this file holds stable rules.
   Neither replaces checking the current working tree.
-- There are substantial uncommitted changes at the 2026-09-15 handoff. Preserve them.
-  Do not reset, overwrite, or reconstruct the app from the initial Git commit.
+- Auth, CRUD, categories and deployment work have been committed and pushed.
+  Always inspect current git status and preserve any new user changes.
 
 ## Collaboration with the user
 
@@ -82,8 +83,9 @@ git diff --check
   is not needed unless code/config changed.
 - Separate automated checks, direct runtime observations, and user-reported QA.
   Do not claim live RLS/security verification from unit tests or metadata checks.
-- Last baseline: 53 tests/typecheck/lint/build passed; user reported CRUD persistence
-  and two-account visibility checks passed. This is historical, not a fresh run.
+- Latest implementation baseline: 61 tests/typecheck/lint/build passed before
+  production deployment. The user confirmed everything works on production.
+  These are recorded results, not a fresh run or automated live security audit.
 - Category implementation uses fixed IDs and nullable text (NULL = Uncategorized).
   Manual SQL verification and core post-upgrade browser QA passed per user report.
   All planned category manual checks passed per user report, including cancelling
